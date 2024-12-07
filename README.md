@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js + Docker Boilerplate
+
+This is a simple boilerplate for quickly starting a Next.js project with Docker support. It provides a streamlined setup process for containerized development and deployment.
+
+---
+
+## Features
+
+- Next.js 14+
+- Tailwind CSS for styling
+- Docker support for containerized deployment
+- Simple, clean structure for quick project initialization
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Install [Node.js](https://nodejs.org/)**
+   Ensure you have Node.js installed for managing dependencies.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install [Docker](https://www.docker.com/)**
+   Docker is required to build and run the containerized application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Steps to Use
 
-## Learn More
+#### 1. Clone the Repository
 
-To learn more about Next.js, take a look at the following resources:
+git clone https://github.com/your-username/nextjs-docker-boilerplate.git
+cd nextjs-docker-boilerplate
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install Dependencies
+bash
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+npm install
+3. Build Your Docker Container
+bash
 
-## Deploy on Vercel
+docker build -t nextjs-docker .
+4. Run Your Docker Container
+bash
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+docker run -p 3000:3000 nextjs-docker
+5. Access the App
+The app will be running at:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+http://localhost:3000
+Project Structure
+
+
+.
+├── Dockerfile           # Docker configuration
+├── package.json         # Project dependencies
+├── pages                # Next.js pages
+├── public               # Public assets
+├── styles               # Tailwind CSS and other styles
+└── README.md            # Documentation
+
+Dockerfile
+Here's the Dockerfile used in this project for reference:
+
+dockerfile
+
+# Use Node.js as the base image
+FROM node:18-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the Next.js app
+RUN npm run build
+
+# Expose the app on port 3000
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "run", "start"]
+Environment Variables
+You can configure environment variables by creating a .env.local file in the root directory:
+
+plaintext
+
+
+# Example variables
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+Contributing
+Feel free to open an issue or submit a pull request for any improvements or suggestions.
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Author
+MrAtlas
+
+javascript
